@@ -1,0 +1,21 @@
+
+<ion-view title="Login">
+    <ion-content padding="true" class="has-header">
+
+        <form>
+            <ion-list>
+                <label class="item item-input item-floating-label">
+                    <span class="input-label">Email</span>
+                    <input type="email" placeholder="Email" ng-model="vm.user.email" required>
+                </label>
+                <label class="item item-input item-floating-label">
+                    <span class="input-label">Password</span>
+                    <input type="password" placeholder="Placeholder" ng-model="vm.user.password" required>
+                </label>
+            </ion-list>
+            <div class="spacer" style="height: 40px;"></div>
+            <button class="button button-stable button-block" ng-click="vm.logIn()">Log in</button>
+            <a href="#/signup" class="button button-positive button-clear button-block">Or create an account</a>
+        </form>
+    </ion-content>
+</ion-view>

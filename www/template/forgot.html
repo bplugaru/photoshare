@@ -1,0 +1,15 @@
+<ion-view title="Forgot password">
+    <ion-content padding="true" class="has-header">
+
+        <form>
+            <ion-list>
+                <label class="item item-input item-floating-label">
+                    <span class="input-label">Email</span>
+                    <input type="email" placeholder="Email" ng-model="vm.email" required>
+                </label>
+            </ion-list>
+            <div class="spacer" style="height: 40px;"></div>
+            <button class="button button-stable button-block" ng-click="vm.resetPassword()">Send new password</button>
+        </form>
+    </ion-content>
+</ion-view>
