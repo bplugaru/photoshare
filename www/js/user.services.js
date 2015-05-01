@@ -1,23 +1,9 @@
 (function (){
   'use strict';
-  angular.module('app')
-  .factory('auth', function ($q,$firebaseObject, FIREBASE) {
+  angular.module('user')
+  .factory('User', function ($q,$firebaseObject, FIREBASE) {
     var fb = new Firebase(FIREBASE);
     var response = {};
-
-    //user {email, password}
-    var logIn = function (user) {
-      var deferred = $q.defer();
-      fb.authWithPassword( user, function(error, authData) {
-        if (error) {
-          deferred.reject(error);
-        } else {
-          deferred.resolve(authData);
-        }
-      });
-      return  deferred.promise;
-    }
-    //user {email, password}
 
     var signUp = function (user) {
       var deferred = $q.defer();
@@ -41,22 +27,24 @@
       })
       return  deferred.promise;
     }
-
-    var getAuth = function() {
+		
+		var changePassword = function(credentials) {
       var deferred = $q.defer();
-      var user = fb.getAuth();
-      if(user === null) {        
-        deferred.reject('user_is_not_set');
-      } else {
-        deferred.resolve(user);
-      }
+      fb.changePassword(credentials, function(error, userData){
+        if(error) {
+          deferred.reject(error);
+        } else {
+          deferred.resolve(userData);
+        }
+      })
       return  deferred.promise;
     }
-    return {
-      logIn: logIn,
-      signUp: signUp,
-      getAuth: getAuth,
-      resetPassword: resetPassword
+
+   
+    return {      
+      signUp: signUp,      
+      resetPassword: resetPassword,
+			changePassword: changePassword
     };
 
   })

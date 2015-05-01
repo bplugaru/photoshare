@@ -1,0 +1,19 @@
+<ion-view title="Take picture">
+  <ion-content class="has-header padding scroll">
+		<div class="list card" ng-show="vm.userImg">		
+			<div class="item item-image">			
+				<img ng-src="{{ vm.userImg }}" class="take-picture"/>
+			</div>
+			<div class="item item-divider bar bar-footer">
+				<div class="button-bar">
+					<button class="button button-light" ng-click="vm.onCancel()">
+						Cancel
+					</button>
+					<button class="button button-balanced" ng-click="vm.onSave()">
+						Save
+					</button>
+				</div>
+			</div>
+		</div>
+	</ion-content>
+</ion-view>

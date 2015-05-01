@@ -1,5 +1,26 @@
 <ion-view title="Gallery">
-    <ion-content padding="true" scroll="false" class="has-header">
-      <button class="button" ng-click="vm.changePassword()">change password</button>
+    <ion-content>
+    <div class="row" ng-repeat="image in vm.gallery track by $index" ng-if="$index % 4 === 0">
+        <div class="col col-25" ng-if="$index < vm.gallery.length">
+            <img ng-src="{{vm.gallery[$index]}}" width="100%" ng-click="vm.showImage({{$index}})" />
+        </div>
+        <div class="col col-25" ng-if="$index + 1 < vm.gallery.length">
+            <img ng-src="{{vm.gallery[$index + 1]}}" width="100%" ng-click="vm.showImage({{$index}})"  />
+        </div>
+        <div class="col col-25" ng-if="$index + 2 < vm.gallery.length">
+            <img ng-src="{{vm.gallery[$index + 2]}}" width="100%" ng-click="vm.showImage({{$index}})" />
+        </div>
+        <div class="col col-25" ng-if="$index + 3 < vm.gallery.length">
+            <img ng-src="{{vm.gallery[$index + 3]}}" width="100%" ng-click="vm.showImage({{$index}})"  />
+        </div>
+    </div>
+
+      <script id="image-modal.html" type="text/ng-template">
+          <div class="modal image-modal transparent" ng-click="vm.closeModal()">
+              <ion-pane class="transparent">
+                 <img ng-src="{{vm.imageSrc}}" class="fullscreen-image"/>
+              </ion-pane>
+          </div>
+      </script>
     </ion-content>
 </ion-view>

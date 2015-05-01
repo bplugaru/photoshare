@@ -7,72 +7,85 @@
   // angular.module is a global place for creating, registering and retrieving Angular modules
   // 'starter' is the name of this angular module example (also set in a <body> attribute in index.html)
   // the 2nd parameter is an array of 'requires'
-
-  angular.module('app', ['ionic', 'ngCordova', 'firebase'])
+	function resolveUser($q, Auth){
+		 	var deferred = $q.defer();
+      var user = Auth.getAuth()
+      if(user) {        				
+				
+        deferred.resolve(user);
+      } else {
+				debugger;
+				deferred.reject('user_is_not_set');        
+      }
+			
+      return  deferred.promise;
+	}
+  angular.module('app', [
+		'ionic', 
+		'ngCordova', 
+		'firebase',
+		'ui.router',
+		'main',
+		'auth',
+		'user'		
+	])
    .constant('FIREBASE', 'https://centricphotoshare.firebaseio.com/')
-   .config(function($stateProvider, $urlRouterProvider) {
-
+   .config(function($stateProvider, $urlRouterProvider) {		
     // Ionic uses AngularUI Router which uses the concept of states
     // Learn more here: https://github.com/angular-ui/ui-router
     // Set up the various states which the app can be in.
     // Each state's controller can be found in controllers.js
     $stateProvider
-      .state('main', {
-        url: '/',
+      .state('root', {
+        url: '',
         abstract: true,
         resolve:{
-          currentUser: function (auth){
-            console.log(auth);
-            return auth.getAuth();
-          }
+          resolveUser: resolveUser
         },
         template:'<ion-nav-view></ion-nav-view>'
-      })
-      .state('main.resetPassword', {
-        url: 'resetPassword',
-        controller: 'ResetPasswordController as vm',
-        templateUrl: 'template/forgot.html'
-      })
-      .state('main.changePassword', {
-        url: 'changePassword',
-        controller: 'ChangePasswordController as vm',
-        templateUrl: 'template/changePassword.html'
-      })
-      .state('main.gallery', {
+      })      
+     /* .state('main.gallery', {
         url: 'gallery',
         controller: 'GalleryController as vm',
         templateUrl: 'template/gallery.html'
-      })
-      .state('auth',{
-          url:'auth/',
-          abstract: true,
-          template:'<ion-nav-view></ion-nav-view>'
-      })
-      .state('auth.login', {
-        url: 'login',
-        controller: 'LoginController as vm',
-        templateUrl: 'template/login.html'
-      })
-      .state('auth.signup', {
-        url: 'signup',
-        controller: 'SignUpController as vm',
-        templateUrl: 'template/signup.html'
-      });
-
+      });     */ 
     // if none of the above states are matched, use this as the fallback
-
-    $urlRouterProvider.otherwise('auth/login');
+   	
+		$urlRouterProvider.otherwise('/');
 
 
   })
   .run(function($ionicPlatform, $rootScope, $state) {
-    $ionicPlatform.ready(function() {
-      $rootScope.$on('$stateChangeError', function (event, toState, toParams, fromState, fromParams, error) {
-        console.log(event, toState, toParams, fromState, fromParams, error);
-          if (error === 'user_is_not_set') {
-          //    $state.go('main.login');
-          }
-      });
+    $rootScope.$on('$stateChangeError', function (event, toState, toParams, fromState, fromParams, error) {
+					console.log('$stateChangeError - fired when an error occurs during transition.');
+					console.log(arguments);          
+					debugger;
+					if (error === 'user_is_not_set') {
+							$state.go('auth.login');
+					}
+    });
+		
+		///	debugger;
+			
+		$rootScope.$on('$stateChangeStart', function (event, toState, toParams, fromState, fromParams) {
+				console.log('$stateChangeStart to ' + toState.to + '- fired when the transition begins. toState,toParams : \n', toState, toParams);
+		});			
+
+		$rootScope.$on('$stateChangeSuccess', function (event, toState, toParams, fromState, fromParams) {
+				console.log('$stateChangeSuccess to ' + toState.name + '- fired once the state transition is complete.');
+		});
+
+		$rootScope.$on('$viewContentLoaded', function (event) {
+				console.log('$viewContentLoaded - fired after dom rendered', event);
+		});
+
+		$rootScope.$on('$stateNotFound', function (event, unfoundState, fromState, fromParams) {
+				console.log('$stateNotFound ' + unfoundState.to + '  - fired when a state cannot be found by its name.');
+				console.log(unfoundState, fromState, fromParams);
+		});			
+		$ionicPlatform.ready(function() {
+      
+			
       // Hide the accessory bar by default (remove this to show the accessory bar above the keyboard
       // for form inputs).
       // The reason we default this to hidden is that native apps don't usually show an accessory bar, at
