@@ -1,26 +1,40 @@
 <ion-view title="Gallery">
     <ion-content>
-    <div class="row" ng-repeat="image in vm.gallery track by $index" ng-if="$index % 4 === 0">
-        <div class="col col-25" ng-if="$index < vm.gallery.length">
-            <img ng-src="{{vm.gallery[$index]}}" width="100%" ng-click="vm.showImage({{$index}})" />
-        </div>
-        <div class="col col-25" ng-if="$index + 1 < vm.gallery.length">
-            <img ng-src="{{vm.gallery[$index + 1]}}" width="100%" ng-click="vm.showImage({{$index}})"  />
-        </div>
-        <div class="col col-25" ng-if="$index + 2 < vm.gallery.length">
-            <img ng-src="{{vm.gallery[$index + 2]}}" width="100%" ng-click="vm.showImage({{$index}})" />
-        </div>
-        <div class="col col-25" ng-if="$index + 3 < vm.gallery.length">
-            <img ng-src="{{vm.gallery[$index + 3]}}" width="100%" ng-click="vm.showImage({{$index}})"  />
-        </div>
-    </div>
+      <div class="row" ng-repeat="image in vm.gallery track by $index" ng-if="$index % 4 === 0">
+          <div class="col col-25" ng-if="$index < vm.gallery.length">
+              <img ng-src="{{vm.gallery[$index].src}}" width="100%" ng-click="vm.showImage({{$index}})" />
+          </div>
+          <div class="col col-25" ng-if="$index + 1 < vm.gallery.length">
+              <img ng-src="{{vm.gallery[$index + 1].src}}" width="100%" ng-click="vm.showImage({{$index}})"  />
+          </div>
+          <div class="col col-25" ng-if="$index + 2 < vm.gallery.length">
+              <img ng-src="{{vm.gallery[$index + 2].src}}" width="100%" ng-click="vm.showImage({{$index}})" />
+          </div>
+          <div class="col col-25" ng-if="$index + 3 < vm.gallery.length">
+              <img ng-src="{{vm.gallery[$index + 3].src}}" width="100%" ng-click="vm.showImage({{$index}})"  />
+          </div>
+      </div>
 
       <script id="image-modal.html" type="text/ng-template">
-          <div class="modal image-modal transparent" ng-click="vm.closeModal()">
+          <div class="modal image-modal transparent">
               <ion-pane class="transparent">
-                 <img ng-src="{{vm.imageSrc}}" class="fullscreen-image"/>
+                <div class="list card">
+
+                  <div class="item item-body">
+                      <img class="full-image" src="delorean.jpg" ng-src="{{vm.imageSrc}}">
+                  </div>
+                  <div class="item item-tabs bar-header">
+
+                      <button type="button" class="button button-assertive icon ion-trash-a" ng-click="vm.deleteMode = true" ng-hide="vm.deleteMode"></button>
+                      <button type="button" class="button icon ion-ios-arrow-back" ng-click="vm.deleteMode = false" ng-show="vm.deleteMode"></button>
+                      <button type="button" class="button button-balanced icon ion-checkmark" ng-click="vm.onDelete()" ng-show="vm.deleteMode"></button>
+                      <button type="button" class="button icon ion-close right" ng-click="vm.closeModal()"></button>
+
+                  </div>
+                </div>
               </ion-pane>
           </div>
       </script>
+
     </ion-content>
 </ion-view>

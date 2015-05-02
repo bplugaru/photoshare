@@ -2,7 +2,7 @@
   'use strict';
   angular.module('main')
   .factory('Gallery', function ($q,$firebaseObject, $firebaseArray, FIREBASE) {
-    var fb = new Firebase(FIREBASE);    
+    var fb = new Firebase(FIREBASE);
 
     //user {email, password}
     var getImages = function () {
@@ -16,19 +16,19 @@
     var save = function (data) {
         var deferred = $q.defer();
 				var images = getImages();
-        if(images) {          
+        if(images) {
           images.$add({image: data}).then(function(){
-            deferred.resolve('success'); 
-          });  
+            deferred.resolve('success');
+          });
         } else {
           deferred.reject('user_is_not_set');
         }
         return deferred.promise;
     };
-		return { 
+		return {
       getImages: getImages,
-      save: save      
+      save: save
     };
   });
-	
+
 }());

@@ -8,13 +8,13 @@ $light:                           #fff !default;
 $stable:                          #f8f8f8 !default;
 $positive:                        #387ef5 !default;
 $calm:                            #11c1f3 !default;
-$balanced:                        #33cd5f !default;
+
 $energized:                       #ffc900 !default;
 $assertive:                       #ef473a !default;
 $royal:                           #886aea !default;
 $dark:                            #444 !default;
 */
-
+$balanced:                        #009036 !default;
 // The path for our ionicons font files, relative to the built CSS in www/css
 $ionicons-font-path: "../lib/ionic/fonts" !default;
 
@@ -68,5 +68,11 @@ img.take-picture {
     transition: opacity 300ms ease-in-out;
     background-color: #000;
     opacity: 0;
+  }
+}
+.popover.image-action {
+  height:54px;
+  .scroll-content{
+    margin:2px 5px;
   }
 }

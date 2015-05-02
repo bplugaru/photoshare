@@ -1,6 +1,6 @@
 (function () {
 	'use strict';
-	
+
 	//loginController
 	//signup controller
 	angular.module('main', ["ngCordova"])
@@ -50,48 +50,58 @@
 			}
 
 		})
-		 
-			
+
+
 		// if none of the above states are matched, use this as the fallback
-		
+
 	}
 
-	function GalleryController($scope, $ionicModal, Gallery) {
-		var vm = this,			
+	function GalleryController($scope, $ionicModal, $ionicPopover, Gallery) {
+		var vm = this,
+
 			images = Gallery.getImages(),
-			modal;
-		
+			modal, popover;
+		vm.index = -1,
+		vm.deleteMode = false;
 		vm.gallery = [];
+
 		images.$watch(function(event){
-			console.log(event);
-			vm.gallery.push("data:image/jpeg;base64," + images.$getRecord(event.key).image);
+			console.log(event)
+			if(event.event === 'child_added') {
+				vm.gallery.push({src:"data:image/jpeg;base64," + images.$getRecord(event.key).image, key: event.key});
+			}
 		});
-		
-		
-		
+
 		$ionicModal.fromTemplateUrl('image-modal.html', {
-	      scope: $scope,
-	      animation: 'slide-in-up'
-	    }).then(function(modal) {
-	      vm.modal = modal;
-	    });
-		
+      scope: $scope,
+      animation: 'slide-in-up'
+    }).then(function(modal) {
+      vm.modal = modal;
+    });
+
 		vm.openModal = function() {
-	      vm.modal.show();
-	    };
-	
-	    vm.closeModal = function() {
-	      vm.modal.hide();
-	    };
-	
-		
+      vm.modal.show();
+    };
+
+    vm.closeModal = function() {
+      vm.modal.hide();
+    };
+
+
 		vm.showImage = function(index) {
-			console.log(index);
-			vm.imageSrc = vm.gallery[index];
+			vm.index = index;
+			vm.imageSrc = vm.gallery[vm.index].src;
 			vm.openModal();
 		}
-		
-		
+
+		vm.onDelete = function() {
+			images.$remove(vm.index).then(function(){
+				vm.deleteMode = false;
+				vm.gallery.splice(vm.index,1);
+				vm.closeModal();
+			});
+		}
+
 	}
 	function TakePictureController($cordovaCamera, $state, Gallery) {
 		var vm = this;
@@ -120,7 +130,7 @@
 				targetHeight: 500,
 				saveToPhotoAlbum: false
 			};
-			
+
 			$cordovaCamera.getPicture(options).then(function (imageData) {
 				vm.imageData = imageData;
 				vm.userImg = "data:image/jpeg;base64," + imageData;
