@@ -74,6 +74,11 @@
 			if(event.event === 'child_added') {
 				vm.gallery.push({src:"data:image/jpeg;base64," + images.$getRecord(event.key).image, key: event.key});
 			}
+      if(event.event === 'child_removed') {
+        vm.gallery = vm.gallery.filter(function(el){
+          return el.key !== event.key
+        });//splice(vm.index,1);
+      }
 		});
 
 		$ionicModal.fromTemplateUrl('image-modal.html', {
@@ -101,20 +106,20 @@
 		vm.onDelete = function() {
 			images.$remove(vm.index).then(function(){
 				vm.deleteMode = false;
-				vm.gallery.splice(vm.index,1);
+			//	vm.gallery.splice(vm.index,1);
 				vm.closeModal();
 			});
 		}
 
-    vm.shareOnFacebook = function(image) {
+    vm.share = function(image) {
       $cordovaSocialSharing
         //.shareViaFacebook('Hello from my office', image)
-        .shareViaTwitter('Hello from my office')
+        .share('Hello from my office', image)
         .then(function(result) {
           // Success!
           console.log("ok");
         }, function(err) {
-          console.log("not ok");
+          console.log("not ok");l
           // An error occurred. Show a message to the user
         });
 
