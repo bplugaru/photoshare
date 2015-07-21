@@ -34,7 +34,7 @@
               </ion-pane>
               <ion-footer-bar>
                     <div class="button-bar">
-                        <button type="button" class="button button-positive icon ion-social-facebook" ng-click="window.plugins.socialsharing.shareViaTwitter('Message via Twitter')">message via Twitter</button>
+                        <button type="button" class="button button-positive icon ion-social-facebook" ng-click="vm.shareOnFacebook(vm.imageSrc)"></button>
 
                       <button type="button" class="button button-assertive icon ion-trash-a" ng-click="vm.deleteMode = true" ng-hide="vm.deleteMode"></button>
                       <button type="button" class="button icon ion-ios-arrow-back" ng-click="vm.deleteMode = false" ng-show="vm.deleteMode"></button>

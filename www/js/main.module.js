@@ -17,7 +17,7 @@
 					return resolveUser;
 				}
 			},
-			abstract: true,
+			//abstract: true,
 			templateUrl: "template/menu.html"
 		}).state('root.main.my', {
 			url: 'my',
@@ -57,7 +57,7 @@
 
 	}
 
-	function GalleryController($scope, $ionicModal, $ionicPopover, Gallery) {
+	function GalleryController($scope, $ionicModal, $ionicPopover, $cordovaSocialSharing, Gallery) {
 		var vm = this,
 			images = Gallery.getImages(),
       modal, popover;
@@ -105,6 +105,20 @@
 				vm.closeModal();
 			});
 		}
+
+    vm.shareOnFacebook = function(image) {
+      $cordovaSocialSharing
+        //.shareViaFacebook('Hello from my office', image)
+        .shareViaTwitter('Hello from my office')
+        .then(function(result) {
+          // Success!
+          console.log("ok");
+        }, function(err) {
+          console.log("not ok");
+          // An error occurred. Show a message to the user
+        });
+
+    }
 
 	}
 	function TakePictureController($cordovaCamera, $state, Gallery) {
