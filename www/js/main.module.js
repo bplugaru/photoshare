@@ -132,7 +132,8 @@
 		//$ionicHistory.clearHistory();
 		vm.onSave = function() {
 			Gallery.save(vm.imageData).then(function(){
-				$state.go("root.main.my");
+				vm.imageData = '';
+        $state.go("root.main.my");
 			}, function(err){
 				console.log(err);
 			});
