@@ -1,6 +1,10 @@
 <ion-view title="Gallery">
     <ion-content>
-      <div class="row" ng-repeat="image in vm.gallery track by $index" ng-if="$index % 4 === 0">
+        <div class="spinner" ng-show="vm.showPreload">
+            <ion-spinner icon="lines" class="center padding-top" ></ion-spinner>
+        </div>
+        <div ng-show="!vm.showPreload && vm.gallery.length === 0" class="center padding-top">Gallery is empty</div>
+        <div class="row" ng-repeat="image in vm.gallery track by $index" ng-if="$index % 4 === 0">
           <div class="col col-25" ng-if="$index < vm.gallery.length">
               <img ng-src="{{vm.gallery[$index].src}}" width="100%" ng-click="vm.showImage({{$index}})" />
           </div>
@@ -17,22 +21,27 @@
 
       <script id="image-modal.html" type="text/ng-template">
           <div class="modal image-modal transparent">
-              <ion-pane class="transparent">
-                <div class="list card">
+              <ion-header-bar>
+                  <h1 class="title">Edit Contact</h1>
+              </ion-header-bar>
+              <ion-pane>
+                  <div class="list">
+                      <div class="item item-body">
+                          <img class="full-image"  ng-src="{{vm.imageSrc}}"/>
+                      </div>
 
-                  <div class="item item-body">
-                      <img class="full-image" src="delorean.jpg" ng-src="{{vm.imageSrc}}">
                   </div>
-                  <div class="item item-tabs bar-header">
+              </ion-pane>
+              <ion-footer-bar>
+                    <div class="button-bar">
+                        <button type="button" class="button button-positive icon ion-social-facebook" ng-click="window.plugins.socialsharing.shareViaTwitter('Message via Twitter')">message via Twitter</button>
 
                       <button type="button" class="button button-assertive icon ion-trash-a" ng-click="vm.deleteMode = true" ng-hide="vm.deleteMode"></button>
                       <button type="button" class="button icon ion-ios-arrow-back" ng-click="vm.deleteMode = false" ng-show="vm.deleteMode"></button>
                       <button type="button" class="button button-balanced icon ion-checkmark" ng-click="vm.onDelete()" ng-show="vm.deleteMode"></button>
-                      <button type="button" class="button icon ion-close right" ng-click="vm.closeModal()"></button>
-
-                  </div>
-                </div>
-              </ion-pane>
+                      <button type="button" class="button icon ion-close" ng-click="vm.closeModal()"></button>
+                    </div>
+              </ion-footer-bar>
           </div>
       </script>
 

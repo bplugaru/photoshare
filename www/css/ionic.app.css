@@ -7635,6 +7635,25 @@ img.take-picture {
   right: 0;
   top: 0; }
 
+.center {
+  text-align: center; }
+
+div.spinner {
+  margin: auto;
+  position: absolute;
+  top: 40px;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  height: 50px;
+  text-align: center; }
+
+.spinner svg {
+  stroke: #009036;
+  fill: #009036;
+  width: 19% !important;
+  height: 50px !important; }
+
 /* Fix modal backdrop for smaller devices */
 @media (max-width: 679px) {
   .active .modal-backdrop-bg {
